@@ -1,9 +1,9 @@
 :root {
-    --bg-color: #030308;
+    --bg-color: #010614;
     --text-color: #ffffff;
-    --accent-glow: rgba(147, 51, 234, 0.4);
-    --card-bg: rgba(255, 255, 255, 0.02);
-    --border-color: rgba(255, 255, 255, 0.08);
+    --accent-glow: rgba(0, 168, 255, 0.75);
+    --card-bg: rgba(0, 30, 80, 0.25);
+    --border-color: rgba(56, 189, 248, 0.35);
 }
 
 * {
@@ -69,42 +69,56 @@ body, html {
     justify-content: center;
     cursor: pointer;
     pointer-events: auto;
-    padding: 40px;
+    padding: 60px 90px;
     border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 100, 255, 0.22) 0%, rgba(0, 168, 255, 0.12) 45%, rgba(0, 40, 100, 0.0) 75%);
+    box-shadow: 0 0 100px rgba(0, 100, 255, 0.20);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .landing-title {
     font-family: 'Syncopate', sans-serif;
-    font-size: 7vw;
+    font-size: 8vw;
     font-weight: 700;
-    letter-spacing: 2.5rem;
-    padding-left: 2.5rem;
+    letter-spacing: 2.8rem;
+    padding-left: 2.8rem;
     color: #ffffff;
-    text-shadow: 0 0 30px rgba(255, 255, 255, 0.4), 
-                 0 0 60px var(--accent-glow);
+    text-shadow: 0 0 15px #ffffff, 
+                 0 0 35px #00a8ff, 
+                 0 0 65px #0066ff, 
+                 0 0 110px #0033aa;
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.supernova-glow-trigger:hover {
+    background: radial-gradient(circle, rgba(0, 140, 255, 0.35) 0%, rgba(0, 200, 255, 0.20) 50%, rgba(0, 40, 100, 0.0) 80%);
+    box-shadow: 0 0 140px rgba(0, 140, 255, 0.35);
+}
+
 .supernova-glow-trigger:hover .landing-title {
-    transform: scale(1.05);
-    letter-spacing: 3rem;
-    padding-left: 3rem;
-    text-shadow: 0 0 40px rgba(255, 255, 255, 0.8), 
-                 0 0 80px rgba(168, 85, 247, 0.8);
+    transform: scale(1.04);
+    letter-spacing: 3.2rem;
+    padding-left: 3.2rem;
+    text-shadow: 0 0 20px #ffffff, 
+                 0 0 50px #00d2ff, 
+                 0 0 90px #0088ff,
+                 0 0 140px #0055ff;
 }
 
 .enter-subtitle {
     font-family: 'Syncopate', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 400;
-    letter-spacing: 0.6rem;
-    padding-top: 20px;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.8rem;
+    padding-top: 25px;
+    color: #e0f2fe;
+    text-shadow: 0 0 10px rgba(0, 168, 255, 0.8);
     transition: color 0.4s ease;
 }
 
 .supernova-glow-trigger:hover .enter-subtitle {
-    color: rgba(255, 255, 255, 0.9);
+    color: #ffffff;
+    text-shadow: 0 0 15px #00d2ff;
 }
 
 #main-container {
@@ -136,12 +150,11 @@ body, html {
 
 .logo {
     font-family: 'Syncopate', sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
-    letter-spacing: 0.5rem;
-    background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,0.4) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.6rem;
+    color: #ffffff;
+    text-shadow: 0 0 10px #fff, 0 0 20px #00a8ff, 0 0 40px #0055ff;
 }
 
 .nav-links {
@@ -154,23 +167,24 @@ body, html {
     border: none;
     outline: none;
     font-family: 'Syncopate', sans-serif;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.5);
     font-size: 0.8rem;
-    font-weight: 400;
+    font-weight: 500;
     letter-spacing: 0.3rem;
     cursor: pointer;
     position: relative;
     padding: 10px 0;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .nav-btn:hover {
-    color: rgba(255, 255, 255, 0.9);
+    color: #38bdf8;
+    text-shadow: 0 0 12px rgba(56, 189, 248, 0.8);
 }
 
 .nav-btn.active {
     color: #ffffff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 12px #ffffff, 0 0 25px #00a8ff;
 }
 
 .nav-btn.active::after {
@@ -179,59 +193,59 @@ body, html {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, #fff 50%, transparent 100%);
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #00a8ff 50%, transparent 100%);
+    box-shadow: 0 0 12px #00a8ff;
 }
 
 .content-wrapper {
     flex-grow: 1;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    padding-bottom: 25px;
     pointer-events: none;
 }
 
-.glass-card {
-    pointer-events: auto;
-    width: 480px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5),
-                inset 0 1px 0 rgba(255,255,255,0.1);
-    transform: translateX(-50px);
+.planet-title-container {
+    pointer-events: none;
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    padding: 0;
+    box-shadow: none;
+    transform: translateY(15px);
     opacity: 0;
-    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
 }
 
-.glass-card.visible {
-    transform: translateX(0);
+.planet-title-container.visible {
+    transform: translateY(0);
     opacity: 1;
 }
 
 .planet-badge {
     display: inline-block;
     font-family: 'Syncopate', sans-serif;
-    font-size: 0.65rem;
-    letter-spacing: 0.25rem;
-    color: rgba(255,255,255,0.5);
-    border: 1px solid rgba(255,255,255,0.15);
-    padding: 6px 14px;
+    font-size: 0.68rem;
+    letter-spacing: 0.35rem;
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    box-shadow: 0 0 15px rgba(0, 168, 255, 0.25);
+    padding: 6px 16px;
     border-radius: 50px;
-    margin-bottom: 25px;
-    background: rgba(255, 255, 255, 0.02);
+    margin-bottom: 12px;
+    background: rgba(0, 30, 80, 0.45);
 }
 
 .section-title {
-    font-size: 2.2rem;
-    font-weight: 300;
-    margin-bottom: 20px;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, #fff 30%, rgba(255,255,255,0.7) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-family: 'Syncopate', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin-bottom: 0px;
+    letter-spacing: 0.35rem;
+    color: #ffffff;
+    text-shadow: 0 0 12px #fff, 0 0 25px #00a8ff, 0 0 50px #0055ff;
 }
 
 .text-content {
