@@ -1,5 +1,5 @@
 /**
- * NOVA 3D Space Engine (NASA Photography Maps & Rich Starfields)
+ * NOVA 3D Space Engine (NASA Photography Maps, Zero-Ambient Void, Specular Sunglint)
  */
 
 let scene, camera, renderer;
@@ -10,7 +10,7 @@ let currentCameraTarget = new THREE.Vector3(0, 0, 0);
 // Performance & Mobile Profiling Flags
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-// Official NASA & Spacecraft Mapping Datasets (Solar System Scope CC-BY 4.0 via Wikimedia CDN)
+// Official NASA Spacecraft Photography Maps (Solar System Scope CC-BY 4.0 via Wikimedia CDN)
 const textureURLs = {
     mercury: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Solarsystemscope_texture_2k_mercury.jpg",
     venus: "https://upload.wikimedia.org/wikipedia/commons/1/1c/Solarsystemscope_texture_2k_venus_atmosphere.jpg",
@@ -20,11 +20,11 @@ const textureURLs = {
 };
 
 const planetData = {
-    mercury: { name: "Mercury", size: 0.55, distance: 10, speed: 0.025, hasAtmosphere: false },
-    venus: { name: "Venus", size: 0.95, distance: 16, speed: 0.018, hasAtmosphere: true, atmosColor: 0xeab308 },
-    earth: { name: "Earth", size: 1.0, distance: 22, speed: 0.015, hasAtmosphere: true, atmosColor: 0x3b82f6 },
-    mars: { name: "Mars", size: 0.8, distance: 28, speed: 0.012, hasAtmosphere: false },
-    jupiter: { name: "Jupiter", size: 2.1, distance: 38, speed: 0.007, hasRings: true }
+    mercury: { name: "Mercury", size: 0.55, distance: 10, speed: 0.025, roughness: 1.0, metalness: 0.0 },
+    venus: { name: "Venus", size: 0.95, distance: 16, speed: 0.018, roughness: 0.4, metalness: 0.1, hasAtmosphere: true, atmosColor: [0.95, 0.7, 0.15] },
+    earth: { name: "Earth", size: 1.0, distance: 22, speed: 0.015, roughness: 0.8, metalness: 0.05, hasAtmosphere: true, atmosColor: [0.35, 0.65, 1.0] },
+    mars: { name: "Mars", size: 0.8, distance: 28, speed: 0.012, roughness: 0.9, metalness: 0.0 },
+    jupiter: { name: "Jupiter", size: 2.1, distance: 38, speed: 0.007, roughness: 0.6, metalness: 0.0, hasRings: true }
 };
 
 function initSpace() {
@@ -36,7 +36,7 @@ function initSpace() {
 
     // Scene Creation
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x030308, 0.012);
+    scene.fog = new THREE.FogExp2(0x030308, 0.008); // Reduced fog to keep black void sharp
 
     // Camera Configuration
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -51,17 +51,17 @@ function initSpace() {
         powerPreference: "high-performance"
     });
     
-    const maxDPR = isMobile ? 1.5 : 2;
+    const maxDPR = isMobile ? 1.3 : 2; // Further throttled mobile resolution to eliminate fillrate lag
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxDPR));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = !isMobile;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-    // Ambient & Intense Sun PointLight
-    const ambientLight = new THREE.AmbientLight(0x090912);
+    // High Contrast Lighting: ZERO ambient light fill for realistic pitch-black night-sides
+    const ambientLight = new THREE.AmbientLight(0x010103); // Deep space vacuum near-black
     scene.add(ambientLight);
 
-    const sunLight = new THREE.PointLight(0xffffff, 2.2, 130, 0.5);
+    const sunLight = new THREE.PointLight(0xffffff, 2.8, 150, 0.5); // Intense sun ray
     sunLight.castShadow = !isMobile;
     sunLight.shadow.bias = -0.002;
     scene.add(sunLight);
@@ -74,14 +74,14 @@ function initSpace() {
         const progress = Math.round((itemsLoaded / itemsTotal) * 100);
         const subtitle = document.querySelector('.enter-subtitle');
         if (subtitle) {
-            subtitle.textContent = `LOADING SYSTEMS: ${progress}%`;
+            subtitle.textContent = `TELEMETRY LOADING: ${progress}%`;
         }
     };
 
     loadingManager.onLoad = function() {
         const subtitle = document.querySelector('.enter-subtitle');
         if (subtitle) {
-            subtitle.textContent = 'CLICK TO ENTER THE SYSTEMS';
+            subtitle.textContent = 'SYSTEMS SYNCED: CLICK TO ENTER';
             subtitle.style.color = '#10b981'; 
             subtitle.style.textShadow = '0 0 15px rgba(16, 185, 129, 0.6)';
         }
@@ -96,20 +96,9 @@ function initSpace() {
 }
 
 /**
- * Loads high fidelity textures first, then builds the solar system
+ * Loads high fidelity textures and compiles PBR maps
  */
 function loadTexturesAndBuild(loader) {
-    const loadedTextures = {};
-
-    // Asynchronously stream NASA assets
-    Object.keys(textureURLs).forEach(key => {
-        loader.load(textureURLs[key], (tex) => {
-            tex.colorSpace = THREE.SRGBColorSpace;
-            tex.minFilter = THREE.LinearMipmapLinearFilter;
-            loadedTextures[key] = tex;
-        });
-    });
-
     // Create Background elements
     createStarfield();
     createGalacticCore();
@@ -121,14 +110,14 @@ function loadTexturesAndBuild(loader) {
     sunCanvas.width = 128; sunCanvas.height = 128;
     const sCtx = sunCanvas.getContext('2d');
     const grad = sCtx.createRadialGradient(64,64,0, 64,64,64);
-    grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.3, '#facc15'); grad.addColorStop(1, '#ea580c');
+    grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.3, '#fef08a'); grad.addColorStop(1, '#ea580c');
     sCtx.fillStyle = grad; sCtx.fillRect(0,0,128,128);
     const sunTex = new THREE.CanvasTexture(sunCanvas);
     const sunMat = new THREE.MeshBasicMaterial({ map: sunTex });
     sun = new THREE.Mesh(sunGeo, sunMat);
     scene.add(sun);
 
-    // Once textures are compiled, map them onto meshes
+    // Assemble the 5 Planets
     Object.keys(planetData).forEach(key => {
         const d = planetData[key];
         const group = new THREE.Group();
@@ -136,16 +125,23 @@ function loadTexturesAndBuild(loader) {
         // 3D Sphere geometry
         const geo = new THREE.SphereGeometry(d.size, 32, 32);
         
-        // standard PBR material
+        // Standard PBR Material
         const mat = new THREE.MeshStandardMaterial({
-            roughness: key === 'earth' ? 0.75 : 0.85,
-            metalness: key === 'earth' ? 0.05 : 0.05,
+            roughness: d.roughness,
+            metalness: d.metalness,
             bumpScale: 0.03
         });
 
-        // Map loaded texture directly on mesh
+        // Load NASA Base Map and procedurally compile specular/roughness map for Earth
         loader.load(textureURLs[key], (tex) => {
             mat.map = tex;
+            
+            if (key === 'earth') {
+                // Compile pixel-perfect Specular Roughness Map in-memory
+                mat.roughnessMap = generateSpecularRoughnessMap(tex.image);
+                mat.roughness = 1.0; // Handed over to map
+            }
+            
             mat.needsUpdate = true;
         });
 
@@ -154,28 +150,45 @@ function loadTexturesAndBuild(loader) {
         mesh.receiveShadow = !isMobile;
         group.add(mesh);
 
-        // Realistic Atmosphere Scattering (Fresnel Shaders)
+        // SUN-ALIGNED CRESCENT ATMOSPHERE SCATTERING (GLSL Shaders)
         if (d.hasAtmosphere && !isMobile) {
-            const atmosGeo = new THREE.SphereGeometry(d.size * 1.12, 32, 32);
+            const atmosGeo = new THREE.SphereGeometry(d.size * 1.15, 32, 32);
             const atmosMat = new THREE.ShaderMaterial({
                 vertexShader: `
                     varying vec3 vNormal;
+                    varying vec3 vNormalCam;
+                    varying vec3 vWorldPosition;
                     void main() {
-                        vNormal = normalize(normalMatrix * normal);
+                        vNormal = normalize(modelMatrix * vec4(normal, 0.0)).xyz;
+                        vNormalCam = normalize(normalMatrix * normal);
+                        vWorldPosition = (modelMatrix * vec4(position, 1.0)).xyz;
                         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
                     }
                 `,
                 fragmentShader: `
                     varying vec3 vNormal;
+                    varying vec3 vNormalCam;
+                    varying vec3 vWorldPosition;
                     uniform vec3 glowColor;
+                    
                     void main() {
-                        // Soft realistic gradient scattering
-                        float intensity = pow(0.65 - dot(vNormal, vec3(0, 0, 1.0)), 3.0);
+                        // 1. Calculate lighting direction from the Sun (Sun is at origin 0,0,0)
+                        vec3 lightDir = normalize(-vWorldPosition);
+                        
+                        // 2. Compute solar alignment (only glow on sunlit side)
+                        float alignment = max(0.0, dot(normalize(vNormal), lightDir));
+                        
+                        // 3. Compute realistic crescent scatter gradient (glows at edges)
+                        float scattering = pow(1.0 - max(0.0, dot(vNormalCam, vec3(0.0, 0.0, 1.0))), 3.5);
+                        
+                        // 4. Smooth out transition
+                        float intensity = scattering * alignment;
+                        
                         gl_FragColor = vec4(glowColor, 1.0) * intensity;
                     }
                 `,
                 uniforms: {
-                    glowColor: { value: new THREE.Color(d.atmosColor) }
+                    glowColor: { value: new THREE.Color().fromArray(d.atmosColor) }
                 },
                 blending: THREE.AdditiveBlending,
                 side: THREE.BackSide,
@@ -200,20 +213,7 @@ function loadTexturesAndBuild(loader) {
             group.add(ring);
         }
 
-        // Add Orbit path lines
-        if (!isMobile) {
-            const orbitGeo = new THREE.BufferGeometry();
-            const orbitPoints = [];
-            for (let i = 0; i <= 64; i++) {
-                const angle = (i / 64) * Math.PI * 2;
-                orbitPoints.push(new THREE.Vector3(Math.cos(angle) * d.distance, 0, Math.sin(angle) * d.distance));
-            }
-            orbitGeo.setFromPoints(orbitPoints);
-            const orbitMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.035 });
-            const orbitLine = new THREE.Line(orbitGeo, orbitMat);
-            scene.add(orbitLine);
-        }
-
+        // Orbit Line Indicators (Disabled completely to match reference photograph realism)
         const startAngle = Math.random() * Math.PI * 2;
         group.position.set(Math.cos(startAngle) * d.distance, 0, Math.sin(startAngle) * d.distance);
         scene.add(group);
@@ -229,10 +229,43 @@ function loadTexturesAndBuild(loader) {
 }
 
 /**
- * 12,000 Starfield (Richer & Denser Stars)
+ * Procedural Specular Roughness Map Compiler
+ * Analyzes dark blue ocean pixels and returns highly reflective metallic indexes
+ */
+function generateSpecularRoughnessMap(img) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 512; canvas.height = 256;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, 512, 256);
+
+    const imgData = ctx.getImageData(0, 0, 512, 256);
+    const data = imgData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+        const r = data[i];
+        const g = data[i+1];
+        const b = data[i+2];
+        const brightness = (r + g + b) / 3;
+
+        // In NASA daymaps, oceans are deep dark blue/black.
+        if (b > r && b > g && brightness < 65) {
+            // Highly reflective ocean (glass-smooth roughness = 0.05)
+            data[i] = 13; data[i+1] = 13; data[i+2] = 13;
+        } else {
+            // Fully rough dry land (roughness = 0.95)
+            data[i] = 242; data[i+1] = 242; data[i+2] = 242;
+        }
+    }
+
+    ctx.putImageData(imgData, 0, 0);
+    return new THREE.CanvasTexture(canvas);
+}
+
+/**
+ * 16,000 Pinprick Stars (Deep Field)
  */
 function createStarfield() {
-    const starCount = isMobile ? 3500 : 12000;
+    const starCount = isMobile ? 3500 : 16000;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(starCount * 3);
     const colors = new Float32Array(starCount * 3);
@@ -248,14 +281,13 @@ function createStarfield() {
         positions[i+1] = radius * Math.sin(phi) * Math.sin(theta);
         positions[i+2] = radius * Math.cos(phi);
 
-        // Mix warm yellow-gold stars with cool blue stars
         const starRand = Math.random();
         if (starRand < 0.25) {
-            colors[i] = 0.95; colors[i+1] = 0.75; colors[i+2] = 0.65; // Soft gold
-        } else if (starRand < 0.5) {
-            colors[i] = 0.65; colors[i+1] = 0.85; colors[i+2] = 0.95; // Cool cyan
+            colors[i] = 0.95; colors[i+1] = 0.8; colors[i+2] = 0.7; // Warm gold
+        } else if (starRand < 0.45) {
+            colors[i] = 0.7; colors[i+1] = 0.85; colors[i+2] = 0.95; // Cool cyan
         } else {
-            colors[i] = 0.95; colors[i+1] = 0.95; colors[i+2] = 0.95; // Bright white
+            colors[i] = 0.95; colors[i+1] = 0.95; colors[i+2] = 0.95; // Crisp white
         }
     }
 
@@ -263,10 +295,10 @@ function createStarfield() {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-        size: isMobile ? 0.85 : 0.5,
+        size: isMobile ? 0.7 : 0.4, // Extremely small pinprick size for realism
         vertexColors: true,
         transparent: true,
-        opacity: 0.8
+        opacity: 0.85
     });
 
     stars = new THREE.Points(geometry, material);
@@ -274,27 +306,26 @@ function createStarfield() {
 }
 
 /**
- * Milky Way Nebula Cloud Layer (Cosmic Ambient dust)
+ * Milky Way Nebula Core Dust Lane
  */
 function createGalacticCore() {
-    const cloudCount = isMobile ? 200 : 800;
+    const cloudCount = isMobile ? 200 : 1200;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(cloudCount * 3);
     const colors = new Float32Array(cloudCount * 3);
 
     for (let i = 0; i < cloudCount * 3; i += 3) {
-        const radius = 100 + Math.random() * 120;
+        const radius = 90 + Math.random() * 140;
         const theta = Math.random() * Math.PI * 2;
         positions[i] = Math.cos(theta) * radius + (Math.random() - 0.5) * 15;
-        positions[i+1] = (Math.random() - 0.5) * 35; // Distribute on a thin disk plane
+        positions[i+1] = (Math.random() - 0.5) * 45; 
         positions[i+2] = Math.sin(theta) * radius + (Math.random() - 0.5) * 15;
 
-        // Rich violet, dark blue, and deep rose glows
         const colorRand = Math.random();
         if (colorRand < 0.5) {
-            colors[i] = 0.35; colors[i+1] = 0.15; colors[i+2] = 0.65; // Violet
+            colors[i] = 0.25; colors[i+1] = 0.12; colors[i+2] = 0.55; // Violet
         } else {
-            colors[i] = 0.15; colors[i+1] = 0.25; colors[i+2] = 0.55; // Blue-indigo
+            colors[i] = 0.12; colors[i+1] = 0.18; colors[i+2] = 0.45; // Blue-indigo
         }
     }
 
@@ -302,10 +333,10 @@ function createGalacticCore() {
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const material = new THREE.PointsMaterial({
-        size: isMobile ? 4.5 : 2.5,
+        size: isMobile ? 4.0 : 2.2,
         vertexColors: true,
         transparent: true,
-        opacity: 0.16,
+        opacity: 0.12,
         blending: THREE.AdditiveBlending
     });
 
@@ -314,7 +345,7 @@ function createGalacticCore() {
 }
 
 /**
- * Supernova Entrance Event
+ * Supernova Core
  */
 function createSupernova() {
     const particleCount = isMobile ? 300 : 800;
@@ -385,7 +416,6 @@ function flyToPlanet(key, duration = 2.2) {
     const offsetDistance = planetData[key].size * 4.2;
     currentCameraTarget = p.group.position;
 
-    // Perfectly offset to expose planet on right-side of screen
     const targetX = p.group.position.x - offsetDistance;
     const targetY = p.group.position.y + offsetDistance * 0.4;
     const targetZ = p.group.position.z + offsetDistance * 1.25;
@@ -410,9 +440,13 @@ function animate() {
 
     const time = Date.now() * 0.001;
 
-    // Background Rotations
-    if (stars) stars.rotation.y = time * 0.003;
-    if (galacticCorePoints) galacticCorePoints.rotation.y = -time * 0.001;
+    // Twinkling stars & slow rotation
+    if (stars) {
+        stars.rotation.y = time * 0.002;
+        // Fast, high fidelity twinkling math
+        stars.material.opacity = 0.65 + Math.sin(time * 3.5) * 0.25;
+    }
+    if (galacticCorePoints) galacticCorePoints.rotation.y = -time * 0.0015;
 
     // Supernova ambient spin
     if (supernovaCore) {
