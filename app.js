@@ -121,4 +121,41 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     });
+
+    /**
+     * TOP NAVIGATION TABS CONTROLLER (IN STOCK, CHANNEL, CONTACT, STYX, RULES)
+     */
+    const navTabBtns = document.querySelectorAll('.nav-tab-btn');
+    const tabSections = document.querySelectorAll('.tab-section');
+
+    navTabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetTab = btn.getAttribute('data-tab');
+
+            // Update tab buttons active state
+            navTabBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Switch section content with smooth transition
+            tabSections.forEach(sec => {
+                if (sec.id === `section-${targetTab}`) {
+                    sec.classList.remove('hidden');
+                    gsap.fromTo(sec, 
+                        { opacity: 0, y: 25 },
+                        { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' }
+                    );
+                    // If switching to IN STOCK, animate bank cards sequentially one after the other
+                    if (targetTab === 'instock') {
+                        gsap.fromTo('.icon-card', 
+                            { opacity: 0, y: 45, scale: 0.88 },
+                            { opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.14, ease: 'power3.out' }
+                        );
+                    }
+                } else {
+                    sec.classList.add('hidden');
+                }
+            });
+        });
+    });
 });
+
