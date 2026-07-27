@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVA | A Cosmic Experience</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <canvas id="webgl-canvas"></canvas>
+    <div class="flash-overlay"></div>
+
+    <div id="landing-container" class="active">
+        <div class="supernova-glow-trigger" id="enter-btn">
+            <h1 class="landing-title">NOVA</h1>
+            <div class="enter-subtitle">CLICK TO ENTER THE SYSTEMS</div>
+        </div>
+    </div>
+
+    <div id="main-container" class="hidden">
+        <header class="navbar">
+            <div class="logo">NOVA</div>
+            <nav class="nav-links">
+                <button class="nav-btn active" data-page="mercury">MERCURY</button>
+                <button class="nav-btn" data-page="venus">VENUS</button>
+                <button class="nav-btn" data-page="earth">EARTH</button>
+                <button class="nav-btn" data-page="mars">MARS</button>
+                <button class="nav-btn" data-page="jupiter">JUPITER</button>
+            </nav>
+        </header>
+
+        <main class="content-wrapper">
+            <div class="glass-card" id="content-card">
+                <div class="planet-badge" id="planet-label">MERCURY</div>
+                <h2 class="section-title" id="page-title">The Inner Sanctum</h2>
+                <div class="text-content" id="page-body">
+                    <p>Welcome to Nova's innermost core. Operating on the scorching edge of our stellar systems, Mercury represents our low-latency, rapid prototype architectures.</p>
+                </div>
+                <div class="card-footer">
+                    <span class="system-status">SYS_STATUS: ACTIVE</span>
+                    <span class="system-coord" id="planet-coords">COORDS: 0.00.10</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="space.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
