@@ -34,15 +34,199 @@
 
     <div id="main-container" class="hidden">
         <header class="navbar">
-            <div class="logo">NOVA</div>
-            <nav class="nav-links">
-                <button class="nav-btn" data-page="mercury">MERCURY</button>
-                <button class="nav-btn" data-page="venus">VENUS</button>
-                <button class="nav-btn active" data-page="earth">EARTH</button>
-                <button class="nav-btn" data-page="mars">MARS</button>
-                <button class="nav-btn" data-page="jupiter">JUPITER</button>
-            </nav>
+            <div class="logo-area">
+                <div class="nav-title">NOV<span class="lambda-symbol">Λ</span></div>
+                <div class="nav-subtitle">BANK ACCOUNTS USA</div>
+            </div>
+            <div class="nav-status">
+                <span class="status-dot"></span> SYSTEMS LIVE &bull; VERIFIED ACCOUNTS
+            </div>
         </header>
+
+        <main class="showcase-content">
+            <div class="showcase-header">
+                <h2 class="showcase-title">SELECT ACCOUNT OR SERVICE</h2>
+                <p class="showcase-subtitle">CLICK ANY ICON BELOW TO VIEW VERIFIED STATUS, CAPABILITIES &amp; PURCHASE DETAILS</p>
+            </div>
+
+            <div class="icon-grid" id="icon-grid">
+                <!-- Card 1: Bank of America -->
+                <div class="icon-card" data-id="boa" data-title="Bank of America (BOA)" data-badge="VERIFIED ACCOUNT • INSTANT ACCESS" data-desc="Full Online Banking Access with Checking &amp; Savings enabled. High-limit wire, BillPay, and Zelle access ready for immediate deployment.">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" class="card-svg"><path fill="currentColor" d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">Bank of America</div>
+                        <div class="card-tag">VERIFIED &bull; INSTANT</div>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+
+                <!-- Card 2: Chase -->
+                <div class="icon-card" data-id="chase" data-title="Chase Bank" data-badge="VERIFIED CHECKING • ZELLE ENABLED" data-desc="JPMorgan Chase verified personal &amp; business checking portals. Secure digital token access with 24/7 online transfers and ACH capabilities.">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" class="card-svg"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">Chase Bank</div>
+                        <div class="card-tag">ZELLE &bull; WIRE READY</div>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+
+                <!-- Card 3: Netspend -->
+                <div class="icon-card" data-id="netspend" data-title="Netspend Prepaid &amp; Direct" data-badge="PREPAID PORTAL • DIRECT DEPOSIT" data-desc="Verified Netspend account portal with direct deposit routing numbers. Instant card activation and high-velocity digital balance management.">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" class="card-svg"><path fill="currentColor" d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">Netspend</div>
+                        <div class="card-tag">PREPAID &bull; VERIFIED</div>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+
+                <!-- Card 4: Citizens Bank -->
+                <div class="icon-card" data-id="citizens" data-title="Citizens Bank" data-badge="ONLINE CHECKING • HIGH LIMIT" data-desc="Verified Citizens Bank online banking portal. Features clean account standing, full statement access, and integrated payment gateways.">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" class="card-svg"><path fill="currentColor" d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2zm0 3.84L13.93 9.5l5.5.47-4.18 3.63 1.25 5.38L12 16.35l-4.5 2.63 1.25-5.38-4.18-3.63 5.5-.47L12 5.84z"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">Citizens Bank</div>
+                        <div class="card-tag">VERIFIED &bull; ONLINE</div>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+
+                <!-- Card 5: Ally Bank -->
+                <div class="icon-card" data-id="ally" data-title="Ally Bank Digital" data-badge="DIGITAL BANKING • SELF-REG READY" data-desc="Fully digital Ally Bank checking and savings access. Zero fee structure with seamless external account linking and instant Zelle transfers.">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" class="card-svg"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">Ally Bank</div>
+                        <div class="card-tag">DIGITAL &bull; ZERO-FEE</div>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+
+                <!-- Card 6: TD Bank -->
+                <div class="icon-card" data-id="tdbank" data-title="TD Bank Online" data-badge="VERIFIED PORTAL • ACH ENABLED" data-desc="TD Bank verified customer portal. Complete online dashboard access with high-limit transfer capability and multi-device token support.">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" class="card-svg"><path fill="currentColor" d="M4 4h16v2H4V4zm0 4h10v2H4V8zm0 4h16v2H4v-2zm0 4h10v2H4v-2z"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">TD Bank</div>
+                        <div class="card-tag">VERIFIED &bull; PORTAL</div>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+
+                <!-- Card 7: U.S. Bank -->
+                <div class="icon-card" data-id="usbank" data-title="U.S. Bank" data-badge="FULL ACCESSIBILITY • 24/7 SUPPORT" data-desc="U.S. Bank verified online checking. Equipped with instant billpay, peer-to-peer payment routing, and verified account ownership documentation.">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" class="card-svg"><path fill="currentColor" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">U.S. Bank</div>
+                        <div class="card-tag">24/7 &bull; BILLPAY</div>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+
+                <!-- Card 8: Charles Schwab -->
+                <div class="icon-card" data-id="schwab" data-title="Charles Schwab Checking &amp; Brokerage" data-badge="IN STOCK • CHECKING + BROKERAGE" data-desc="Charles Schwab high-tier dual checking and investor brokerage accounts. Unlocked global ATM access and premium verification clearance.">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" class="card-svg"><path fill="currentColor" d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">Charles Schwab</div>
+                        <div class="card-tag">CHECKING + BROKERAGE</div>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+
+                <!-- Card 9: Zelle / Wire Portal -->
+                <div class="icon-card" data-id="zelle" data-title="Zelle &amp; Wire Hub" data-badge="HIGH VELOCITY • WIRE ENABLED" data-desc="Pre-configured payment routing accounts ready for high-limit domestic and international wire transfers, ACH, and Zelle instant clearing.">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" class="card-svg"><path fill="currentColor" d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">Zelle &amp; Wire Hub</div>
+                        <div class="card-tag">INSTANT &bull; HIGH LIMIT</div>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+
+                <!-- Card 10: FEMA / Treasury -->
+                <div class="icon-card" data-id="fema" data-title="FEMA &amp; Treasury Access" data-badge="GOVERNMENT ROUTING • VERIFIED" data-desc="Specialized routing accounts configured for government disbursements, FEMA clearances, tax refund deposits, and secure ACH receipt.">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" class="card-svg"><path fill="currentColor" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">FEMA &amp; Treasury</div>
+                        <div class="card-tag">ROUTING &bull; VERIFIED</div>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+
+                <!-- Card 11: Secure Mailboxes -->
+                <div class="icon-card" data-id="mailboxes" data-title="Secure Mailboxes &amp; Verification" data-badge="EMAIL ACCESS • 2FA ENABLED" data-desc="Dedicated email accounts and secure mailboxes tied directly to banking portals. Guaranteed OTP and 2FA authentication delivery.">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" class="card-svg"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">Secure Mailboxes</div>
+                        <div class="card-tag">2FA &bull; AUTH ENABLED</div>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+
+                <!-- Card 12: Custom Self-Reg -->
+                <div class="icon-card" data-id="selfreg" data-title="Custom Self-Reg Packages" data-badge="ON-DEMAND • FULL CONTROL" data-desc="Custom self-registration kits with complete guide and clean IP setup. Register accounts under custom specifications with zero friction.">
+                    <div class="icon-box">
+                        <svg viewBox="0 0 24 24" class="card-svg"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">Custom Self-Reg</div>
+                        <div class="card-tag">ON-DEMAND &bull; SETUP</div>
+                    </div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Interactive Account Detail Modal -->
+        <div class="modal-backdrop hidden" id="account-modal">
+            <div class="modal-card">
+                <button class="modal-close-btn" id="modal-close">&times;</button>
+                <div class="modal-header">
+                    <div class="modal-badge" id="modal-badge">VERIFIED ACCOUNT</div>
+                    <h3 class="modal-title" id="modal-title">Bank of America (BOA)</h3>
+                </div>
+                <div class="modal-body" id="modal-desc">
+                    Full Online Banking Access with Checking &amp; Savings enabled.
+                </div>
+                <div class="modal-specs">
+                    <div class="spec-item">
+                        <span class="spec-label">DELIVERY</span>
+                        <span class="spec-value">INSTANT DIGITAL</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">SECURITY</span>
+                        <span class="spec-value">2FA / TOKEN READY</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">STATUS</span>
+                        <span class="spec-value text-cyan">IN STOCK &bull; VERIFIED</span>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="modal-btn primary" id="modal-proceed-btn">PROCEED TO PURCHASE</a>
+                    <button class="modal-btn secondary" id="modal-cancel-btn">CLOSE</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
