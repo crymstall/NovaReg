@@ -1,5 +1,5 @@
 /**
- * NOVA 3D Space Engine (NASA Photography Maps, CORS Bypassed, Specular Ocean Sunglint)
+ * NOVA 3D Space Engine (NASA Photography Maps, Local Storage, Specular Ocean Sunglint)
  */
 
 let scene, camera, renderer;
@@ -10,13 +10,13 @@ let currentCameraTarget = new THREE.Vector3(0, 0, 0);
 // Performance & Mobile Profiling Flags
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-// High-Availability CORS-Enabled Developer CDN for NASA Textures (Bypasses Browser Security Blocks)
+// Localized, high-speed, CORS-free NASA/Solar System Scope photographic textures
 const textureURLs = {
-    mercury: "https://cdn.jsdelivr.net/gh/cookieMonsterDev/solar-system-threejs@master/assets/mercury-map.jpg",
-    venus: "https://cdn.jsdelivr.net/gh/cookieMonsterDev/solar-system-threejs@master/assets/venus-map.jpg",
-    earth: "https://cdn.jsdelivr.net/gh/cookieMonsterDev/solar-system-threejs@master/assets/earth-map-1.jpg",
-    mars: "https://cdn.jsdelivr.net/gh/cookieMonsterDev/solar-system-threejs@master/assets/mars-map.jpg",
-    jupiter: "https://cdn.jsdelivr.net/gh/cookieMonsterDev/solar-system-threejs@master/assets/jupiter-map.jpg"
+    mercury: "textures/mercury.jpg",
+    venus: "textures/venus.jpg",
+    earth: "textures/earth.jpg",
+    mars: "textures/mars.jpg",
+    jupiter: "textures/jupiter.jpg"
 };
 
 const planetData = {
@@ -69,9 +69,6 @@ function initSpace() {
     // Initialize Loading Manager
     const loadingManager = new THREE.LoadingManager();
     const textureLoader = new THREE.TextureLoader(loadingManager);
-    
-    // Set crossOrigin flag to allow anonymous texture requests
-    textureLoader.setCrossOrigin('anonymous');
 
     loadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
         const progress = Math.round((itemsLoaded / itemsTotal) * 100);
