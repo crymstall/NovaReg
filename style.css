@@ -63,62 +63,219 @@ body, html {
 }
 
 .supernova-glow-trigger {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     pointer-events: auto;
-    padding: 60px 90px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 100, 255, 0.22) 0%, rgba(0, 168, 255, 0.12) 45%, rgba(0, 40, 100, 0.0) 75%);
-    box-shadow: 0 0 100px rgba(0, 100, 255, 0.20);
+    padding: 70px 110px 55px 110px;
+    border-radius: 40px;
+    background: radial-gradient(ellipse at 50% 45%, rgba(0, 110, 255, 0.28) 0%, rgba(0, 168, 255, 0.14) 45%, rgba(0, 40, 100, 0.0) 78%);
+    box-shadow: 0 0 120px rgba(0, 120, 255, 0.18);
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    max-width: 92vw;
+}
+
+.nebula-bg-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    width: 650px;
+    height: 480px;
+    background: 
+        radial-gradient(ellipse at 50% 50%, rgba(0, 140, 255, 0.35) 0%, rgba(0, 180, 255, 0.2) 35%, rgba(0, 90, 220, 0.1) 60%, transparent 80%),
+        radial-gradient(circle at 65% 70%, rgba(0, 168, 255, 0.3) 0%, rgba(0, 80, 220, 0.12) 45%, transparent 70%),
+        radial-gradient(circle at 35% 35%, rgba(200, 240, 255, 0.22) 0%, rgba(0, 140, 255, 0.15) 50%, transparent 75%);
+    filter: blur(40px);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.85;
+    transition: all 0.6s ease;
+}
+
+.nebula-ring-glow {
+    position: absolute;
+    bottom: 30px;
+    right: 50px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(0, 168, 255, 0.6) 0%, rgba(0, 80, 220, 0.45) 45%, rgba(0, 30, 120, 0.25) 75%, transparent 100%);
+    box-shadow: 
+        0 0 40px rgba(0, 168, 255, 0.5),
+        inset -8px -8px 25px rgba(0, 40, 150, 0.8),
+        inset 10px 10px 30px rgba(200, 240, 255, 0.6);
+    filter: blur(4px);
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.75;
+    transition: all 0.6s ease;
+}
+
+.nebula-stars {
+    position: absolute;
+    top: 40px;
+    right: 120px;
+    width: 160px;
+    height: 120px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.nebula-star {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 
+        0 0 15px 3px #ffffff,
+        0 0 30px 8px rgba(0, 200, 255, 0.8),
+        -15px 15px 25px 4px rgba(255, 255, 255, 0.4);
+}
+
+.nebula-star.s1 {
+    top: 10px;
+    right: 25px;
+    transform: rotate(-35deg);
+}
+
+.nebula-star.s2 {
+    top: 45px;
+    right: 75px;
+    width: 8px;
+    height: 8px;
+}
+
+.nebula-star.s3 {
+    top: 85px;
+    right: 65px;
+    width: 9px;
+    height: 9px;
+}
+
+.logo-wrapper {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .landing-title {
     font-family: 'Syncopate', sans-serif;
-    font-size: 8vw;
+    font-size: 6.5vw;
     font-weight: 700;
-    letter-spacing: 2.8rem;
-    padding-left: 2.8rem;
+    letter-spacing: 1.5rem;
+    padding-left: 1.5rem;
     color: #ffffff;
-    text-shadow: 0 0 15px #ffffff, 
-                 0 0 35px #00a8ff, 
-                 0 0 65px #0066ff, 
-                 0 0 110px #0033aa;
+    text-shadow: 
+        0 0 15px #ffffff, 
+        0 0 35px #00d2ff, 
+        0 0 65px #0088ff, 
+        0 0 110px #0055ff;
+    margin-bottom: 12px;
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.supernova-glow-trigger:hover {
-    background: radial-gradient(circle, rgba(0, 140, 255, 0.35) 0%, rgba(0, 200, 255, 0.20) 50%, rgba(0, 40, 100, 0.0) 80%);
-    box-shadow: 0 0 140px rgba(0, 140, 255, 0.35);
+.lambda-symbol {
+    font-family: 'Syncopate', sans-serif;
+    display: inline-block;
 }
 
-.supernova-glow-trigger:hover .landing-title {
-    transform: scale(1.04);
-    letter-spacing: 3.2rem;
-    padding-left: 3.2rem;
-    text-shadow: 0 0 20px #ffffff, 
-                 0 0 50px #00d2ff, 
-                 0 0 90px #0088ff,
-                 0 0 140px #0055ff;
+.logo-subheading {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    letter-spacing: 0.55rem;
+    padding-left: 0.55rem;
+    color: #ffffff;
+    text-shadow: 
+        0 0 10px #ffffff,
+        0 0 25px #00a8ff;
+    margin-bottom: 14px;
+    transition: all 0.6s ease;
+}
+
+.logo-country {
+    font-family: 'Syncopate', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.75rem;
+    padding-left: 0.75rem;
+    color: #00a8ff;
+    text-shadow: 
+        0 0 12px #00a8ff,
+        0 0 30px #0055ff;
+    margin-bottom: 40px;
+    transition: all 0.6s ease;
 }
 
 .enter-subtitle {
-    font-family: 'Syncopate', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.8rem;
-    padding-top: 25px;
-    color: #e0f2fe;
-    text-shadow: 0 0 10px rgba(0, 168, 255, 0.8);
-    transition: color 0.4s ease;
+    position: relative;
+    z-index: 5;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.18rem;
+    padding: 16px 36px;
+    color: #ffffff;
+    background: rgba(0, 168, 255, 0.15);
+    border: 1px solid rgba(0, 168, 255, 0.4);
+    border-radius: 50px;
+    box-shadow: 
+        0 0 25px rgba(0, 168, 255, 0.3),
+        inset 0 0 15px rgba(0, 168, 255, 0.2);
+    text-shadow: 0 0 10px rgba(0, 210, 255, 0.9);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    text-transform: uppercase;
+}
+
+.supernova-glow-trigger:hover {
+    background: radial-gradient(ellipse at 50% 45%, rgba(0, 140, 255, 0.38) 0%, rgba(0, 200, 255, 0.22) 50%, rgba(0, 40, 100, 0.0) 80%);
+    box-shadow: 0 0 160px rgba(0, 168, 255, 0.35);
+    transform: translateY(-4px);
+}
+
+.supernova-glow-trigger:hover .landing-title {
+    transform: scale(1.03);
+    letter-spacing: 1.7rem;
+    padding-left: 1.7rem;
+    text-shadow: 
+        0 0 20px #ffffff, 
+        0 0 50px #00e5ff, 
+        0 0 90px #0088ff,
+        0 0 140px #0055ff;
+}
+
+.supernova-glow-trigger:hover .logo-subheading {
+    color: #e0f8ff;
+    text-shadow: 
+        0 0 15px #ffffff,
+        0 0 35px #00d2ff;
+}
+
+.supernova-glow-trigger:hover .logo-country {
+    color: #38bdf8;
+    text-shadow: 
+        0 0 18px #38bdf8,
+        0 0 40px #0088ff;
 }
 
 .supernova-glow-trigger:hover .enter-subtitle {
     color: #ffffff;
-    text-shadow: 0 0 15px #00d2ff;
+    background: rgba(0, 168, 255, 0.28);
+    border-color: rgba(0, 210, 255, 0.8);
+    box-shadow: 
+        0 0 40px rgba(0, 210, 255, 0.6),
+        inset 0 0 25px rgba(0, 210, 255, 0.4);
+    transform: scale(1.04);
 }
 
 #main-container {
