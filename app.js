@@ -42,10 +42,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         landingContainer.classList.remove('active');
                         mainContainer.classList.remove('hidden');
 
-                        // Animate Icon Cards entering with staggering cyan glow
+                        // Animate Icon Cards entering one after the other with staggering cyan glow
                         gsap.fromTo('.icon-card', 
-                            { opacity: 0, y: 35, scale: 0.92 },
-                            { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.05, ease: 'power3.out' }
+                            { opacity: 0, y: 45, scale: 0.88 },
+                            { opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.14, ease: 'power3.out' }
                         );
                     }
                 })
