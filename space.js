@@ -1,5 +1,5 @@
 /**
- * NOVA 3D Space Engine (NASA Photography Maps, Zero-Ambient Void, Specular Sunglint)
+ * NOVA 3D Space Engine (NASA Photography Maps, CORS Bypassed, Specular Ocean Sunglint)
  */
 
 let scene, camera, renderer;
@@ -10,13 +10,13 @@ let currentCameraTarget = new THREE.Vector3(0, 0, 0);
 // Performance & Mobile Profiling Flags
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-// Official NASA Spacecraft Photography Maps (Solar System Scope CC-BY 4.0 via Wikimedia CDN)
+// High-Availability CORS-Enabled Developer CDN for NASA Textures (Bypasses Browser Security Blocks)
 const textureURLs = {
-    mercury: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Solarsystemscope_texture_2k_mercury.jpg",
-    venus: "https://upload.wikimedia.org/wikipedia/commons/1/1c/Solarsystemscope_texture_2k_venus_atmosphere.jpg",
-    earth: "https://upload.wikimedia.org/wikipedia/commons/0/04/Solarsystemscope_texture_2k_earth_daymap.jpg",
-    mars: "https://upload.wikimedia.org/wikipedia/commons/3/30/Solarsystemscope_texture_2k_mars.jpg",
-    jupiter: "https://upload.wikimedia.org/wikipedia/commons/2/22/Solarsystemscope_texture_2k_jupiter.jpg"
+    mercury: "https://cdn.jsdelivr.net/gh/cookieMonsterDev/solar-system-threejs@master/assets/mercury-map.jpg",
+    venus: "https://cdn.jsdelivr.net/gh/cookieMonsterDev/solar-system-threejs@master/assets/venus-map.jpg",
+    earth: "https://cdn.jsdelivr.net/gh/cookieMonsterDev/solar-system-threejs@master/assets/earth-map-1.jpg",
+    mars: "https://cdn.jsdelivr.net/gh/cookieMonsterDev/solar-system-threejs@master/assets/mars-map.jpg",
+    jupiter: "https://cdn.jsdelivr.net/gh/cookieMonsterDev/solar-system-threejs@master/assets/jupiter-map.jpg"
 };
 
 const planetData = {
@@ -36,7 +36,7 @@ function initSpace() {
 
     // Scene Creation
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x030308, 0.008); // Reduced fog to keep black void sharp
+    scene.fog = new THREE.FogExp2(0x030308, 0.008);
 
     // Camera Configuration
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -51,17 +51,17 @@ function initSpace() {
         powerPreference: "high-performance"
     });
     
-    const maxDPR = isMobile ? 1.3 : 2; // Further throttled mobile resolution to eliminate fillrate lag
+    const maxDPR = isMobile ? 1.3 : 2;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxDPR));
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = !isMobile;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     // High Contrast Lighting: ZERO ambient light fill for realistic pitch-black night-sides
-    const ambientLight = new THREE.AmbientLight(0x010103); // Deep space vacuum near-black
+    const ambientLight = new THREE.AmbientLight(0x010103);
     scene.add(ambientLight);
 
-    const sunLight = new THREE.PointLight(0xffffff, 2.8, 150, 0.5); // Intense sun ray
+    const sunLight = new THREE.PointLight(0xffffff, 2.8, 150, 0.5);
     sunLight.castShadow = !isMobile;
     sunLight.shadow.bias = -0.002;
     scene.add(sunLight);
@@ -69,6 +69,9 @@ function initSpace() {
     // Initialize Loading Manager
     const loadingManager = new THREE.LoadingManager();
     const textureLoader = new THREE.TextureLoader(loadingManager);
+    
+    // Set crossOrigin flag to allow anonymous texture requests
+    textureLoader.setCrossOrigin('anonymous');
 
     loadingManager.onProgress = function(url, itemsLoaded, itemsTotal) {
         const progress = Math.round((itemsLoaded / itemsTotal) * 100);
@@ -213,7 +216,6 @@ function loadTexturesAndBuild(loader) {
             group.add(ring);
         }
 
-        // Orbit Line Indicators (Disabled completely to match reference photograph realism)
         const startAngle = Math.random() * Math.PI * 2;
         group.position.set(Math.cos(startAngle) * d.distance, 0, Math.sin(startAngle) * d.distance);
         scene.add(group);
@@ -443,7 +445,6 @@ function animate() {
     // Twinkling stars & slow rotation
     if (stars) {
         stars.rotation.y = time * 0.002;
-        // Fast, high fidelity twinkling math
         stars.material.opacity = 0.65 + Math.sin(time * 3.5) * 0.25;
     }
     if (galacticCorePoints) galacticCorePoints.rotation.y = -time * 0.0015;
