@@ -841,6 +841,19 @@ body, html {
     text-shadow: 0 0 8px rgba(0, 210, 255, 0.5);
 }
 
+.info-value a {
+    color: #00e5ff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-bottom: 1px dashed #00e5ff;
+}
+
+.info-value a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 12px #00e5ff;
+    border-bottom: 1px solid #ffffff;
+}
+
 .rule-item {
     font-size: 0.96rem;
     line-height: 1.6;
